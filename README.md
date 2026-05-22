@@ -14,20 +14,13 @@ Built during an industrial strategy alternance — this toolkit automates the fu
 ## 🏗️ Architecture
 
 ```
-┌─────────────────────┐     ┌──────────────────────┐     ┌─────────────────────┐
-│   Intelligence Bot   │────▶│   Excel Database      │────▶│  Company Profile    │
-│   (Web Scraping +    │     │   (DataBase.xlsm)     │     │  Generator (Flask)  │
-│    GPT-4o Extraction)│     │                        │     │                     │
-└─────────────────────┘     └──────────────────────┘     └─────────────────────┘
-        Module 1                   Shared Data                  Module 2
-   scraper/bot.py                                         app.py + templates/
+[Intelligence Generator]  →  DataBase.xlsx  →  [Profile Generator]  →  PPTX slides
+  (Streamlit + GPT-4o)                           (this repo)
 ```
 
-Two modules share a common Excel database:
+This repo is **Module 2** of a two-part pipeline — it reads a structured Excel database and generates formatted PowerPoint company profiles via a Flask web interface.
 
-1. **Intelligence Bot** — Scrapes the web for company data, uses GPT-4o for structured entity extraction, and populates the Excel database with standardised fields.
-
-2. **Company Profile Generator** — Flask web app that reads the database and generates formatted PowerPoint company profile sheets via a dark-themed three-column interface.
+Use the [Company Intelligence Generator](https://github.com/AntoineGuigui/company-intelligence) (Module 1) to automatically populate `DataBase.xlsx` via web scraping + LLM extraction.
 
 ---
 
@@ -46,7 +39,6 @@ Two modules share a common Excel database:
 ### Prerequisites
 
 - Python 3.8+
-- OpenAI API key (for the Intelligence Bot only — the Profile Generator works fully offline)
 
 ### Installation
 
@@ -58,21 +50,11 @@ source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### Run the Profile Generator (Module 2)
+### Run
 
 ```bash
 python app.py
 # Open http://localhost:8080
-```
-
-### Run the Intelligence Bot (Module 1)
-
-```bash
-cp .env.example .env
-# Edit .env with your OpenAI API key
-
-python -m scraper.bot --companies "Company A, Company B" --country "France"
-python -m scraper.bot --input companies.csv --output DataBase.xlsm
 ```
 
 ---
@@ -82,28 +64,20 @@ python -m scraper.bot --input companies.csv --output DataBase.xlsm
 ```
 company-intelligence-toolkit/
 │
-├── scraper/                        # Module 1: Intelligence Bot
-│   ├── __init__.py
-│   ├── bot.py                      # CLI orchestrator (scrape → extract → write)
-│   ├── web_scraper.py              # Web scraping (requests + BeautifulSoup)
-│   ├── llm_extractor.py            # GPT-4o structured JSON extraction
-│   ├── excel_writer.py             # Append to DataBase.xlsm (openpyxl)
-│   └── config.py                   # Prompts, schema, field mappings
-│
-├── company_profile_generator.py    # Module 2: PowerPoint generation engine
 ├── app.py                          # Flask server + field clustering + batch generation
+├── company_profile_generator.py    # PowerPoint generation engine
 │
 ├── templates/
 │   ├── index.html                  # Main 3-column dark-themed interface
 │   └── admin.html                  # Field clustering admin panel
 │
-├── static/                         # Static assets (logos, etc.)
+├── static/                         # Static assets
 ├── docs/
 │   └── DATABASE_SCHEMA.md          # Excel column reference
 │
 ├── requirements.txt
 ├── run_windows.bat                 # One-click launcher for Windows
-├── .env.example                    # Environment variables template
+├── .env.example
 ├── .gitignore
 └── LICENSE
 ```
@@ -117,25 +91,7 @@ company-intelligence-toolkit/
 
 ---
 
-## 🔧 Module 1 — Intelligence Bot
-
-### What it does
-
-Given a list of company names and countries, the bot:
-
-1. **Scrapes** public web sources (company websites, registries, financial databases)
-2. **Extracts** structured data via GPT-4o with a strict JSON schema enforcing field-by-field output
-3. **Writes** clean, standardised rows into `DataBase.xlsm`
-
-### Key design decisions
-
-- **Prompt engineering**: Structured system prompt enforces JSON output matching the Excel schema, reducing hallucination
-- **Retry logic**: Failed extractions are retried with shortened input
-- **Multi-country support**: Tested across multiple countries covering 80+ companies
-
----
-
-## 🖥️ Module 2 — Company Profile Generator
+## 🖥️ Company Profile Generator
 
 ### What it does
 
@@ -206,24 +162,10 @@ This tool was built in a **fully offline Windows environment** (no internet acce
 |---|---|
 | Backend | Python 3.8+, Flask |
 | Frontend | Vanilla HTML/CSS/JS (zero frameworks) |
-| Data pipeline | requests, BeautifulSoup, OpenAI GPT-4o |
 | NLP/Clustering | scikit-learn (TF-IDF, Agglomerative), scipy |
 | Excel I/O | pandas, openpyxl |
 | PowerPoint | python-pptx, Pillow |
 | PPTX merging | lxml (ZIP-level XML manipulation) |
-
----
-
-## 🔗 Integration with Company Intelligence Generator
-
-This tool is **Module 2** of a two-part pipeline:
-
-```
-[Intelligence Generator]  →  DataBase.xlsx  →  [Profile Generator]  →  PPTX slides
-  (Streamlit + GPT-4o)                           (this repo)
-```
-
-Use the [Company Intelligence Generator](https://github.com/AntoineGuigui/company-intelligence) to automatically populate `DataBase.xlsx` via web scraping + LLM extraction, then this toolkit reads it and generates PowerPoint slides.
 
 ---
 
