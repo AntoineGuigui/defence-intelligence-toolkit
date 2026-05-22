@@ -1,6 +1,6 @@
-# 🛡️ Defence Intelligence Toolkit
+# 🔍 Company Intelligence Toolkit
 
-**End-to-end competitive intelligence platform for defence industry analysis.**
+**End-to-end competitive intelligence platform for company analysis.**
 
 Built during an industrial strategy alternance — this toolkit automates the full pipeline from web research to structured company profiles, replacing hours of manual work per company with a one-click workflow.
 
@@ -25,7 +25,7 @@ Built during an industrial strategy alternance — this toolkit automates the fu
 
 Two modules share a common Excel database:
 
-1. **Intelligence Bot** — Scrapes the web for defence company data, uses GPT-4o for structured entity extraction, and populates the Excel database with standardised fields.
+1. **Intelligence Bot** — Scrapes the web for company data, uses GPT-4o for structured entity extraction, and populates the Excel database with standardised fields.
 
 2. **Company Profile Generator** — Flask web app that reads the database and generates formatted PowerPoint company profile sheets via a dark-themed three-column interface.
 
@@ -51,8 +51,8 @@ Two modules share a common Excel database:
 ### Installation
 
 ```bash
-git clone https://github.com/AntoineGuigui/defence-intelligence-toolkit.git
-cd defence-intelligence-toolkit
+git clone https://github.com/AntoineGuigui/company-intelligence-toolkit.git
+cd company-intelligence-toolkit
 python -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
@@ -71,7 +71,7 @@ python app.py
 cp .env.example .env
 # Edit .env with your OpenAI API key
 
-python -m scraper.bot --companies "Company A, Company B" --country "India"
+python -m scraper.bot --companies "Company A, Company B" --country "France"
 python -m scraper.bot --input companies.csv --output DataBase.xlsm
 ```
 
@@ -80,7 +80,7 @@ python -m scraper.bot --input companies.csv --output DataBase.xlsm
 ## 📁 Project Structure
 
 ```
-defence-intelligence-toolkit/
+company-intelligence-toolkit/
 │
 ├── scraper/                        # Module 1: Intelligence Bot
 │   ├── __init__.py
@@ -131,7 +131,7 @@ Given a list of company names and countries, the bot:
 
 - **Prompt engineering**: Structured system prompt enforces JSON output matching the Excel schema, reducing hallucination
 - **Retry logic**: Failed extractions are retried with shortened input
-- **Multi-country support**: Tested across 9 countries (Belgium, Brazil, Canada, Denmark, Spain, Greece, India, Norway, Romania) covering 84+ companies
+- **Multi-country support**: Tested across multiple countries covering 80+ companies
 
 ---
 
@@ -182,7 +182,7 @@ A Flask web application that:
 
 ## 🏭 Built For
 
-This tool was built in a **fully offline Windows environment** (no internet access) at a defence company. Design constraints:
+This tool was built in a **fully offline Windows environment** (no internet access). Design constraints:
 
 - No external package downloads at runtime
 - No CDN or external font loading
@@ -193,9 +193,9 @@ This tool was built in a **fully offline Windows environment** (no internet acce
 
 ## 📊 Impact
 
-- **84+ companies** profiled across **9 countries**
+- **80+ companies** profiled across **9 countries**
 - **~3h → ~10min** per company profile (end-to-end)
-- Profiles used for **COMEX-level strategic briefings**
+- Profiles used for strategic briefings
 - Adopted by colleagues in the industrial strategy team
 
 ---
@@ -248,6 +248,6 @@ MIT — see [LICENSE](LICENSE).
 
 ## 👤 Author
 
-**Antoine Guigui**
-CentraleSupélec '26 — Supply Chain & Data Analytics
+**Antoine Guigui**  
+CentraleSupélec '26 — Supply Chain & Data Analytics  
 [LinkedIn](https://www.linkedin.com/in/antoine-guigui-846266132/)
