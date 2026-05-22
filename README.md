@@ -55,8 +55,9 @@ python app.py
 ```
 company-intelligence-toolkit/
 │
-├── app.py                          # Flask server + field clustering + batch generation
+├── app.py                          # Flask server + batch generation
 ├── company_profile_generator.py    # PowerPoint generation engine
+├── clustering.py                   # field clustering
 │
 ├── templates/
 │   ├── index.html                  # Main 3-column dark-themed interface
