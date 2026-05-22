@@ -24,11 +24,6 @@ Use the [Company Intelligence Generator](https://github.com/AntoineGuigui/compan
 
 ---
 
-## 📸 Screenshots
-
-| Main Interface | Company Detail | Admin Panel |
-|---|---|---|
-| ![](docs/screenshots/FrontSite.png) | ![](docs/screenshots/ExPPT.png) | ![](docs/screenshots/FrontAdmin.png) |
 
 ## 🚀 Quick Start
 
